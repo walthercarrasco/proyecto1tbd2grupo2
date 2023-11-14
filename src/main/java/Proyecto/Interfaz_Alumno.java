@@ -166,7 +166,6 @@ public class Interfaz_Alumno extends javax.swing.JFrame {
         JD_Costos.getContentPane().add(JD_CP_BG21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         JD_Matriculas.setMinimumSize(new java.awt.Dimension(550, 350));
-        JD_Matriculas.setPreferredSize(new java.awt.Dimension(450, 310));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

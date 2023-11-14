@@ -14,4 +14,5 @@ public class conn {
     static MongoCollection vehiculos = database.getCollection("Vehiculos");
     static MongoCollection practicas = database.getCollection("Practicas");
     static MongoCollection pagos = database.getCollection("Pagos");
+    static MongoCollection calificaciones = database.getCollection("Calificaciones");
 }

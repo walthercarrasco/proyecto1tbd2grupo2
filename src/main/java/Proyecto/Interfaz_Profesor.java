@@ -267,6 +267,8 @@ public class Interfaz_Profesor extends javax.swing.JFrame {
             JD_Tarifar.pack();
             JD_Tarifar.setLocationRelativeTo(null);
             JD_Tarifar.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "No tienes auto asignado o aun no haz seleccionado un alumno");
         }
     }//GEN-LAST:event_BT_TarifarMousePressed
 
@@ -326,6 +328,11 @@ public class Interfaz_Profesor extends javax.swing.JFrame {
                             du.append("alumno_dni", dnialumno);
                             du.append("profesor_dni", dniprofesor);
                             conn.practicas.deleteOne(du);
+                            du.append("tipo", tip);
+                            du.append("calificacion", cal);
+                            conn.calificaciones.insertOne(du);                            
+                            
+                            
                         }
                     }                  
                 }else{
@@ -336,6 +343,10 @@ public class Interfaz_Profesor extends javax.swing.JFrame {
                             du.append("alumno_dni", dnialumno);
                             du.append("profesor_dni", dniprofesor);
                             conn.practicas.deleteOne(du);
+                            String tip = (String)model.getValueAt(i, 4);
+                            du.append("tipo", tip);
+                            du.append("calificacion", cal);
+                            conn.calificaciones.insertOne(du);
                         }
                     }                   
                 }

@@ -174,6 +174,10 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TB_Pagos = new javax.swing.JTable();
+        JD_RegistroCalificaciones = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TB_Calificaciones = new javax.swing.JTable();
         CRUD_BG = new javax.swing.JPanel();
         jSeparator14 = new javax.swing.JSeparator();
         jSeparator15 = new javax.swing.JSeparator();
@@ -199,6 +203,7 @@ public class Interfaz extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        BT_RegistrosCalificaciones = new javax.swing.JButton();
         BT_RegistrosPagos = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -965,10 +970,39 @@ public class Interfaz extends javax.swing.JFrame {
 
         JD_RegistroPagos.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        TB_Calificaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Estudiante DNI", "Profesor DNI", "Tipo", "Calificacion Obtenida"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(TB_Calificaciones);
+        if (TB_Calificaciones.getColumnModel().getColumnCount() > 0) {
+            TB_Calificaciones.getColumnModel().getColumn(0).setResizable(false);
+            TB_Calificaciones.getColumnModel().getColumn(1).setResizable(false);
+            TB_Calificaciones.getColumnModel().getColumn(2).setResizable(false);
+            TB_Calificaciones.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 580, 380));
+
+        JD_RegistroCalificaciones.getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(90, 50));
         setMinimumSize(new java.awt.Dimension(1450, 700));
-        setPreferredSize(new java.awt.Dimension(1450, 700));
         setResizable(false);
         setSize(new java.awt.Dimension(1450, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1178,13 +1212,31 @@ public class Interfaz extends javax.swing.JFrame {
         jSeparator4.setOpaque(true);
         CRUD_BG.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 20, 190));
 
+        BT_RegistrosCalificaciones.setText("Ver Registro de Calificaciones");
+        BT_RegistrosCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BT_RegistrosCalificacionesMousePressed(evt);
+            }
+        });
+        BT_RegistrosCalificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_RegistrosCalificacionesActionPerformed(evt);
+            }
+        });
+        CRUD_BG.add(BT_RegistrosCalificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 180, -1));
+
         BT_RegistrosPagos.setText("Ver Registros de Pagos");
         BT_RegistrosPagos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 BT_RegistrosPagosMousePressed(evt);
             }
         });
-        CRUD_BG.add(BT_RegistrosPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 180, -1));
+        BT_RegistrosPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_RegistrosPagosActionPerformed(evt);
+            }
+        });
+        CRUD_BG.add(BT_RegistrosPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 180, -1));
 
         jLabel8.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(232, 137, 137));
@@ -1537,6 +1589,28 @@ public class Interfaz extends javax.swing.JFrame {
         Abrir_JDialog(JD_RegistroPagos);
     }//GEN-LAST:event_BT_RegistrosPagosMousePressed
 
+    private void BT_RegistrosPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_RegistrosPagosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BT_RegistrosPagosActionPerformed
+
+    private void BT_RegistrosCalificacionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_RegistrosCalificacionesMousePressed
+        ArrayList<Document> coso = new ArrayList<>();
+        conn.calificaciones.find().into(coso);
+        DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new Object[]{"Estudiante DNI", "Profesor DNI", "Tipo", "Calificacion"});
+        for(Document p : coso){
+            Object[] row = {
+                p.get("alumno_dni"),p.get("profesor_dni"), p.get("tipo"), p.get("Calificacion Obtenida")
+            };
+            model.addRow(row);
+        }
+        TB_Calificaciones.setModel(model);
+        Abrir_JDialog(JD_RegistroCalificaciones);        
+    }//GEN-LAST:event_BT_RegistrosCalificacionesMousePressed
+
+    private void BT_RegistrosCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_RegistrosCalificacionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BT_RegistrosCalificacionesActionPerformed
+
     private void MA_CB_AlumnoItemStateChanged(java.awt.event.ItemEvent evt){
         if(MA_CB_Alumno.getSelectedIndex() >= 0 && !estudiantesdni.isEmpty()){
             String dni = estudiantesdni.get(MA_CB_Alumno.getSelectedIndex());
@@ -1561,6 +1635,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton BT_Modificar_Alumno;
     private javax.swing.JButton BT_Modificar_Profesor;
     private javax.swing.JButton BT_Modificar_Vehiculo;
+    private javax.swing.JButton BT_RegistrosCalificaciones;
     private javax.swing.JButton BT_RegistrosPagos;
     private javax.swing.JButton CA_BT_Crear;
     private javax.swing.JTextField CA_TF_Correo;
@@ -1622,6 +1697,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JDialog JD_Modificar_Alumno;
     private javax.swing.JDialog JD_Modificar_Profesor;
     private javax.swing.JDialog JD_Modificar_Vehiculo;
+    private javax.swing.JDialog JD_RegistroCalificaciones;
     private javax.swing.JDialog JD_RegistroPagos;
     private javax.swing.JScrollPane LP_ScrollPane;
     private javax.swing.JScrollPane LP_ScrollPane1;
@@ -1645,6 +1721,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTextField MV_TF_Marca;
     private javax.swing.JTextField MV_TF_Matricula;
     private javax.swing.JTextField MV_TF_Modelo;
+    private javax.swing.JTable TB_Calificaciones;
     private javax.swing.JTable TB_Pagos;
     private javax.swing.JLabel jLabel101;
     private javax.swing.JLabel jLabel102;
@@ -1695,7 +1772,9 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel94;
     private javax.swing.JLabel jLabel95;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator14;
